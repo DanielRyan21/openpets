@@ -1,7 +1,5 @@
-# OpenPets
-
 <p align="center">
-  <img src="apps/desktop/assets/onboarding-logo.webp" alt="OpenPets" width="160" />
+  <img src="assets/openpets.png" alt="OpenPets - pixel art desktop pets for coding agents" width="100%" />
 </p>
 
 <p align="center">
@@ -18,13 +16,11 @@
 
 OpenPets is a tray-first desktop companion app for AI coding agents.
 
-- **Desktop companion** — a small pet that reacts while agents think, edit, test, wait for approval, finish, or hit an error.
-- **Agent integrations** — first-class setup for Claude Code and OpenCode, including MCP tools, instructions, and automatic hooks/plugins.
-- **MCP ready** — any MCP-capable agent can send short safe speech bubbles and reactions through the OpenPets MCP server.
-- **Pet-pack friendly** — loads installed animated pet packs and can route a selected agent/project to its own pet window.
-- **Privacy-conscious by design** — automatic hook speech is static and local; prompts, code, logs, command output, URLs, paths, and secrets are not shown in bubbles.
-
-The current v2 workspace lives in `apps/*` and `packages/*`. The `v1/` folder is reference material only, and `web/` remains outside the v2 workspace.
+- **Desktop companion** - a small pet that reacts while agents think, edit, test, wait for approval, finish, or hit an error.
+- **Agent integrations** - first-class setup for Claude Code and OpenCode, including MCP tools, instructions, and automatic hooks/plugins.
+- **MCP ready** - any MCP-capable agent can send short safe speech bubbles and reactions through the OpenPets MCP server.
+- **Pet-pack friendly** - loads installed animated pet packs and can route a selected agent/project to its own pet window.
+- **Privacy-conscious by design** - automatic hook speech is static and local; prompts, code, logs, command output, URLs, paths, and secrets are not shown in bubbles.
 
 ## Quick start
 
@@ -54,8 +50,8 @@ open /Applications/OpenPets.app
 
 Use the desktop **Integrations** screen for global setup when available:
 
-- **Claude Code** — installs OpenPets MCP, Claude memory instructions, and optional Claude hooks.
-- **OpenCode** — installs OpenPets MCP, an OpenCode instruction file, and the `@open-pets/opencode` plugin.
+- **Claude Code** - installs OpenPets MCP, Claude memory instructions, and optional Claude hooks.
+- **OpenCode** - installs OpenPets MCP, an OpenCode instruction file, and the `@open-pets/opencode` plugin.
 
 For project-local setup, run the CLI from the project you want to configure:
 
@@ -146,9 +142,9 @@ To target a specific installed non-default pet:
 
 Available MCP tools:
 
-- `openpets_status` — check whether OpenPets is reachable and which pet is targeted.
-- `openpets_react` — set a short reaction on the target pet.
-- `openpets_say` — show a short safe speech bubble, optionally with a reaction.
+- `openpets_status` - check whether OpenPets is reachable and which pet is targeted.
+- `openpets_react` - set a short reaction on the target pet.
+- `openpets_say` - show a short safe speech bubble, optionally with a reaction.
 
 `openpets_say` messages must be short, single-line, and must not look like code, logs, secrets, URLs, or file paths.
 
@@ -192,7 +188,7 @@ Generic shell activity is intentionally quiet by default. Hook/plugin speech is 
 - pnpm 11+
 - TypeScript
 
-No Bun runtime is required for v2 development.
+No Bun runtime is required for development.
 
 ### Install
 
@@ -243,18 +239,16 @@ packages/opencode         @open-pets/opencode, OpenCode config and plugin integr
 packages/agent-events     Shared safe agent event speech helpers
 packages/cli              @open-pets/cli, user-run CLI and MCP/hook entrypoints
 packages/pet-format       @open-pets/pet-format, pet/catalog format types
-docs/                     Current v2 documentation
-v1/                       Historical/reference material only
-web/                      Existing web app, outside the v2 workspace
+docs/                     Documentation
 ```
 
 ## Documentation
 
-- [`docs/claude-integration.md`](docs/claude-integration.md) — Claude Code setup, MCP, memory, hooks, and safety.
-- [`docs/opencode.md`](docs/opencode.md) — OpenCode global/project setup, plugin behavior, and safety.
-- [`docs/testing.md`](docs/testing.md) — test/check strategy.
-- [`docs/release.md`](docs/release.md) — desktop release process.
-- [`docs/workflow.md`](docs/workflow.md) — project workflow notes.
+- [`docs/claude-integration.md`](docs/claude-integration.md) - Claude Code setup, MCP, memory, hooks, and safety.
+- [`docs/opencode.md`](docs/opencode.md) - OpenCode global/project setup, plugin behavior, and safety.
+- [`docs/testing.md`](docs/testing.md) - test/check strategy.
+- [`docs/release.md`](docs/release.md) - desktop release process.
+- [`docs/workflow.md`](docs/workflow.md) - project workflow notes.
 
 ## Safety and privacy notes
 
