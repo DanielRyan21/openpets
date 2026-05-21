@@ -174,8 +174,8 @@ Please verify Phase 01:
 
 1. Run `pnpm dev:desktop`.
 2. Confirm the OpenPets tray icon appears.
-3. Open Manage Pets, Configure Agents, and Settings from the tray.
-4. Confirm each placeholder window opens.
+3. Open Manage Pets, Integrations, and Settings from the tray.
+4. Confirm each Control Center route opens.
 5. Quit from the tray and confirm the app exits cleanly.
 
 Does Phase 01 pass on your machine?

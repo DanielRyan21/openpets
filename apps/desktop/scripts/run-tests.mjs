@@ -5,13 +5,14 @@
  */
 
 import { spawn } from "node:child_process";
+import { rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
 
-const preloadChecks = ["preload.cjs", "pet-preload.cjs", "plugin-sdk-preload.cjs"];
+const preloadChecks = ["control-center-preload.cjs", "pet-preload.cjs", "plugin-sdk-preload.cjs"];
 const behaviorTests = [
   ".test-dist/tests/lease-manager.test.js",
   ".test-dist/tests/onboarding-state.test.js",
@@ -26,8 +27,8 @@ const behaviorTests = [
   ".test-dist/tests/plugin-catalog-validation.test.js",
   ".test-dist/tests/plugin-package.test.js",
   ".test-dist/tests/plugin-service.test.js",
-  ".test-dist/tests/plugins-window.test.js",
   ".test-dist/tests/plugin-ui-static.test.js",
+  ".test-dist/tests/control-center-ipc.test.js",
 ];
 const contractTests = [
   ".test-dist/contracts/local-ipc-protocol.contract.js",
@@ -66,6 +67,7 @@ async function main() {
 
   // 2. Build tests
   console.log("\n[2/5] Building tests...");
+  rmSync(join(rootDir, ".test-dist"), { recursive: true, force: true });
   await run("pnpm", ["test:build"]);
 
   // 3. Run behavior tests

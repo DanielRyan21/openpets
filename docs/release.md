@@ -183,7 +183,7 @@ OpenPets now includes a first-party plugin platform for optional desktop compani
 
 ### Plugin management
 
-- New polished Plugins window with install, enable, configure, update, reload, and uninstall actions.
+- New polished Control Center Plugins route with install, enable, configure, update, reload, and uninstall actions.
 - Friendly plugin configuration UI; no JSON editing required.
 - Plugin permissions and network hosts are explicit.
 - JavaScript plugins run in a sandboxed renderer with a narrow OpenPets SDK.

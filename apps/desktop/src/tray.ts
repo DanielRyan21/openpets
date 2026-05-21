@@ -2,12 +2,12 @@ import { Menu, Tray, type MenuItemConstructorOptions } from "electron";
 
 import { getAppStateSnapshot, isOnboardingCompleted } from "./app-state.js";
 import { createTrayIcon } from "./assets.js";
+import { openControlCenterIntegrationsWindow, openControlCenterOnboardingWindow, openControlCenterPetsWindow, openControlCenterPluginsWindow, openControlCenterSettingsWindow, openControlCenterWindow } from "./control-center-window.js";
 import { hideDefaultPet, isDefaultPetVisible, setDefaultPetPaused, showDefaultPet } from "./default-pet-controller.js";
 import { quitOpenPets } from "./lifecycle.js";
 import { info, openLogsFolder } from "./logger.js";
 import { shellState, togglePaused } from "./state.js";
 import { getUpdateStatus, openUpdateReleasePage } from "./update-checker.js";
-import { openTaskWindow } from "./windows.js";
 
 let tray: Tray | null = null;
 
@@ -39,7 +39,7 @@ export function refreshTrayMenu(): void {
     : [
       {
         label: "Continue Setup...",
-        click: () => openTaskWindow("onboarding"),
+        click: () => openControlCenterOnboardingWindow(),
       },
       { type: "separator" as const },
     ];
@@ -53,8 +53,13 @@ export function refreshTrayMenu(): void {
     { type: "separator" },
     ...continueSetupItems,
     {
+      label: "Open Control Center...",
+      click: () => openControlCenterWindow(),
+    },
+    { type: "separator" },
+    {
       label: `Default Pet: ${defaultPetName}`,
-      click: () => openTaskWindow("pet-manager"),
+      click: () => openControlCenterPetsWindow(),
     },
     {
       label: isDefaultPetVisible() ? "Hide Default Pet" : "Show Default Pet",
@@ -81,19 +86,19 @@ export function refreshTrayMenu(): void {
     { type: "separator" },
     {
       label: "Manage Pets...",
-      click: () => openTaskWindow("pet-manager"),
+      click: () => openControlCenterPetsWindow(),
     },
     {
       label: "Integrations...",
-      click: () => openTaskWindow("agent-setup"),
+      click: () => openControlCenterIntegrationsWindow(),
     },
     {
       label: "Plugins...",
-      click: () => openTaskWindow("plugins"),
+      click: () => openControlCenterPluginsWindow(),
     },
     {
       label: "Settings...",
-      click: () => openTaskWindow("settings"),
+      click: () => openControlCenterSettingsWindow(),
     },
     {
       label: "Open Logs Folder...",

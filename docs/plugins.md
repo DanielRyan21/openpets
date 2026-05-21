@@ -15,7 +15,7 @@ The current implementation includes:
 - Capability-based SDK access for pet actions, schedules, storage, config, commands, status, logging, and approved HTTP requests.
 - Catalog v2 support at `https://openpets.dev/plugins/catalog.v2.json`, with v1 fallback for older/declarative catalog support.
 - Local developer plugin loading through explicit environment variables.
-- Host-rendered plugin configuration and command UI in the desktop Plugins window.
+- Host-rendered plugin configuration and command UI in the desktop Control Center Plugins route.
 - Three first-party JavaScript plugins under the web repo:
   - `openpets.daily-reminders`
   - `openpets.pomodoro`
@@ -228,7 +228,7 @@ Supported config field types include:
 - lists
 - multi-selects
 
-The Plugins window can:
+The Control Center Plugins route can:
 
 - show installed plugins
 - show enabled/broken/deprecated/catalog-disabled state

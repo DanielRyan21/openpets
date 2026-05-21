@@ -27,7 +27,7 @@ main.ts
 ├── plugin-service.ts (plugin state/runtime init)
 ├── tray.ts (tray creation)
 ├── local-ipc.ts (IPC server start)
-└── windows.ts (UI handlers)
+└── control-center-window.ts / control-center-ipc.ts (human UI window and exact IPC handlers)
 ```
 
 **IPC Request Flow**:
@@ -54,9 +54,9 @@ pet-window.ts
 └── pet-preload.cjs (renderer IPC for drag/click-through)
 ```
 
-**Agent Setup Flow**:
+**Control Center Integrations Flow**:
 ```
-windows.ts (IPC handlers)
+control-center-ipc.ts (IPC handlers)
 └── agent-setup.ts
     ├── detectClaudeCodeStatus() (claude --version, claude mcp list)
     ├── runAgentSetupAction()
@@ -87,9 +87,9 @@ main.ts → initializePluginService(userData, defaultPluginPetApi).start()
 ├── plugin-service.ts orchestrates UI actions, permission confirmation, config validation, install/update/uninstall/load-local, and runtime reloads
 └── lifecycle.ts → stopPluginService() on quit
 
-Plugins window:
-tray.ts → openTaskWindow("plugins") → windows.ts → plugins-window.ts
-└── openpets:plugins-* IPC handlers call PluginService methods
+Plugins route:
+tray.ts → openControlCenterPluginsWindow() → control-center-window.ts
+└── openpets:control-center:* plugin IPC handlers call PluginService methods
 
 Catalog install/update:
 plugin-catalog.ts → plugin-catalog-validation.ts
@@ -104,8 +104,7 @@ plugin-local-loader.ts validates selected folder manifest and snapshots only ope
 - **Within src/**:
   - `main.ts` → all modules (orchestrator)
   - `local-ipc.ts` ↔ `lease-manager.ts` ↔ `agent-pet-controller.ts`
-  - `windows.ts` ↔ `app-state.ts`, `agent-setup.ts`, `catalog.ts`, `codex-pets.ts`
-  - `windows.ts` ↔ `plugin-service.ts`, `plugins-window.ts` for plugin UI IPC and HTML
+  - `control-center-ipc.ts` ↔ `app-state.ts`, `agent-setup.ts`, `catalog.ts`, `codex-pets.ts`, `plugin-service.ts`
   - `pet-window.ts` ↔ `default-pet-controller.ts`, `agent-pet-controller.ts`
   - `pet-installation.ts` ↔ `app-state.ts`, `catalog.ts`, `zip-safety.ts`
   - `plugin-service.ts` ↔ `plugin-state.ts`, `plugin-runtime.ts`, `plugin-catalog.ts`, `plugin-package.ts`, `plugin-local-loader.ts`
@@ -132,11 +131,12 @@ plugin-local-loader.ts validates selected folder manifest and snapshots only ope
 - `logger.ts`: Structured logging with scopes (app, ipc, lease, pet.default, pet.agent, pet.window, state, tray, ui), log rotation, redaction
 
 **UI**:
-- `tray.ts`: Tray icon (nativeImage), context menu builder, update status integration, plugins entry, logs folder
-- `windows.ts`: BrowserWindow factory, IPC handler registration, HTML generators for task windows, reaction animation settings, plugin UI IPC endpoints
+- `tray.ts`: Tray icon (nativeImage), context menu builder, update status integration, Control Center route entries, logs folder
+- `control-center-window.ts`: Sandboxed Control Center BrowserWindow with narrow route launchers and loopback-gated dev URL support.
+- `control-center-ipc.ts` / `control-center-ipc-core.ts`: Exact Control Center IPC handlers, sender authorization, and input validation for dashboard, onboarding, settings, pets, integrations, and plugins.
+- `renderer/control-center/`: React/Vite Control Center UI for dashboard, onboarding, pets, integrations, plugins, and settings.
 - `assets.ts`: Tray icon loading with generated fallback
 - `display.ts`: Screen geometry helpers, pet window positioning
-- `plugins-window.ts`: Sandboxed data-URL HTML/CSS shell for Installed/Discover/Developer plugin management.
 
 **Pets**:
 - `pet-window.ts`: Window creation (transparent, frameless, always-on-top), HTML/CSS generation, sprite animation states, speech bubbles, status badges, transient displays
@@ -194,11 +194,11 @@ plugin-local-loader.ts validates selected folder manifest and snapshots only ope
 | `app-state.ts` | `userData/openpets-state.json` | Atomic JSON writes with reaction animation overrides |
 | CLI via IPC | `local-ipc.ts` | `pet.react`, `pet.say`, `lease.*` |
 | `lease-manager.ts` | `agent-pet-controller.ts` | Show/close agent pets |
-| `windows.ts` | Renderer | State snapshots via IPC invoke |
+| `control-center-ipc.ts` | Control Center renderer | Sender-authorized snapshots and exact mutations via IPC invoke |
 | `agent-setup.ts` | Claude/OpenCode/Cursor CLI | MCP add/remove, config writes |
 | All modules | `logger.ts` | Structured logs to `userData/logs/openpets.log` |
 | Plugin catalog | `plugin-catalog.ts`/`plugin-service.ts` | Discoverable plugin metadata filtered by app version and install state |
 | Plugin ZIP/local folder | `plugin-package.ts`/`plugin-local-loader.ts` | Validated manifest snapshot installed under `userData/plugins*` |
 | `plugin-state.ts` | `userData/openpets-plugin-state.json` | Installed plugins, enabled flag, approved permissions, config, broken status |
 | `plugin-runtime.ts` | `plugin-pet-api.ts` | Timer-triggered pet speech/reactions on the default pet |
-| Plugins renderer | `windows.ts`/`plugin-service.ts` | Snapshot, enable, config, reload, install/update/uninstall, local-load operations |
+| Control Center plugins route | `control-center-ipc.ts`/`plugin-service.ts` | Snapshot, enable, config, reload, install/update/uninstall, command execution, local-load operations |

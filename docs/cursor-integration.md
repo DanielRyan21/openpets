@@ -7,7 +7,7 @@ OpenPets supports Cursor through MCP configuration plus optional project rules. 
 | Capability | Status | How it works |
 | --- | --- | --- |
 | Cursor MCP tools | Implemented | Cursor runs `@open-pets/mcp` as a stdio MCP server. |
-| Desktop global setup | Implemented | Desktop Agent Setup manages `~/.cursor/mcp.json`, only `mcpServers.openpets`. |
+| Desktop global setup | Implemented | Control Center Integrations manages `~/.cursor/mcp.json`, only `mcpServers.openpets`. |
 | CLI project setup | Implemented | `openpets configure --agent cursor` manages `<project>/.cursor/mcp.json`. |
 | Project rules | Implemented | `openpets configure --agent cursor --rules-only` manages `<project>/.cursor/rules/openpets.mdc`. |
 | Global/user rules | Not implemented | Cursor exposes user rules through Settings; OpenPets does not assume a safe editable file path. |
@@ -305,15 +305,17 @@ Important semantics:
 Files:
 
 - `apps/desktop/src/agent-setup.ts`
-- `apps/desktop/src/windows.ts`
-- `apps/desktop/preload.cjs`
+- `apps/desktop/src/control-center-ipc.ts`
+- `apps/desktop/src/control-center-ipc-core.ts`
+- `apps/desktop/control-center-preload.cjs`
+- `apps/desktop/src/renderer/control-center/src/main.tsx`
 - `apps/desktop/src/check-cursor-desktop.ts`
 - `apps/desktop/src/check-packaging-contract.ts`
 
 Desktop behavior:
 
 - global Cursor MCP install/update/replace/remove in `~/.cursor/mcp.json`;
-- Cursor detail pane with global warning;
+- Control Center Integrations route with global warning;
 - OpenPets-only MCP preview;
 - project rules preview and copy button;
 - no desktop project rules writes;

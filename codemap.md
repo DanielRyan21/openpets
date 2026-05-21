@@ -49,7 +49,7 @@ OpenPets is a pnpm/TypeScript monorepo for an Electron desktop companion app plu
 
 ## Architecture Flow
 
-1. The desktop app starts `apps/desktop/src/main.ts`, initializes app state, creates tray/task windows, and starts a local IPC server.
+1. The desktop app starts `apps/desktop/src/main.ts`, initializes app state, creates the tray and Control Center UI as needed, and starts a local IPC server.
 2. Agent integrations (`packages/claude`, `packages/opencode`, `packages/cursor`, `packages/pi`, and `packages/mcp`) configure agents or emit pet commands through `@open-pets/client`.
 3. The client discovers Unix sockets, Windows named pipes, or TCP endpoints for WSL cross-platform access.
 4. The desktop IPC server routes commands through lease-managed controllers so default and agent pets can coexist safely.

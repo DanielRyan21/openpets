@@ -1,5 +1,7 @@
 # Cursor Integration Todos
 
+> Historical implementation tracker. This file preserves the UI labels used during the original Cursor rollout, including “Desktop Agent Setup” and “Cursor detail pane.” The current desktop UI for these flows is Control Center Integrations; see `docs/cursor-integration.md` and the desktop codemaps for current architecture.
+
 This checklist tracks Cursor implementation work. Each phase has an Oracle approval gate before moving to the next phase.
 
 ## Phase 1A — Validation spike

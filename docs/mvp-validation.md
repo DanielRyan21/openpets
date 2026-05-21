@@ -15,7 +15,7 @@ The current checkpoint is a macOS local dogfooding package built with `electron-
 | Pet Manager | Ready for macOS local validation | Catalog availability may affect install verification. |
 | Settings persistence | Ready for macOS local validation | Toggle a preference, restart, and confirm persistence. |
 | Local IPC/client smoke | Ready for macOS local validation | Run while the packaged app is open. |
-| Claude Agent Setup preview | Ready for macOS local validation | Preview should use packaged bundled `node .../app.asar.unpacked/...` paths. |
+| Claude integration preview | Ready for macOS local validation | Control Center Integrations preview should use packaged bundled `node .../app.asar.unpacked/...` paths. |
 | Claude config mutation | Optional/manual only | Requires user confirmation, backups, and cleanup/removal when done. |
 | Windows/Linux packages | Unverified | Documented gap until tested on those platforms. |
 | Signing/notarization/installers/auto-update | Deferred | Required before public distribution. |
@@ -78,7 +78,7 @@ Run this checklist after the automated commands pass.
 1. Launch the generated packaged app from `apps/desktop/dist-electron/`.
    - Expected: OpenPets starts without using the dev Electron entrypoint.
 2. Confirm the tray/menu bar icon appears.
-   - Expected: Tray/menu items are available, including Manage Pets, Configure Agents, Settings, show/hide, pause/resume, and Quit.
+   - Expected: Tray/menu items are available, including Manage Pets, Integrations, Settings, show/hide, pause/resume, and Quit.
 3. Confirm the default pet behavior.
    - Expected: The default pet appears as an animated bundled sprite, can be shown/hidden, paused/resumed, dragged, and still behaves correctly after app restart.
    - Expected: Dragging right switches to a right-facing/running animation; dragging left switches to a left-facing/running animation; stopping settles back to idle without jitter.
@@ -100,13 +100,13 @@ Run this checklist after the automated commands pass.
    ```
 
    - Expected: The client discovers the running packaged app and receives status without token/version errors.
-9. Open Agent Setup and inspect the Claude preview without applying changes.
+9. Open Control Center Integrations and inspect the Claude preview without applying changes.
    - Expected: Packaged previews use `node` commands pointing inside the packaged app, not unpublished `npx -y @open-pets/*` commands.
    - Expected MCP shape: `node .../app.asar.unpacked/node_modules/@open-pets/mcp/dist/index.js`.
    - Expected hooks shape: `node .../app.asar.unpacked/node_modules/@open-pets/claude/dist/cli.js hook --openpets-managed`.
 10. Optional mutating Claude validation: configure/install Claude MCP/hooks only if you intentionally want to modify your real Claude settings.
     - Expected: OpenPets shows what it will change and creates backups before editing.
-    - Cleanup: use Agent Setup remove/uninstall actions when done if you do not want to keep the integration.
+    - Cleanup: use Control Center Integrations remove/uninstall actions when done if you do not want to keep the integration.
 11. Quit OpenPets from the tray.
     - Expected: The app exits cleanly and removes transient local IPC discovery state.
 
@@ -141,7 +141,7 @@ Expected command resources live under `app.asar.unpacked`, not `app.asar`, becau
 
 Packaged bundled Claude commands require `node` to be available on Claude's PATH.
 
-Claude settings may contain absolute paths into the packaged OpenPets app. Moving, deleting, or replacing the app may require opening Agent Setup and using Replace/Install again. Use Agent Setup remove/uninstall before deleting the app if you want to remove OpenPets-managed Claude entries.
+Claude settings may contain absolute paths into the packaged OpenPets app. Moving, deleting, or replacing the app may require opening Control Center Integrations and using Replace/Install again. Use Control Center Integrations remove/uninstall before deleting the app if you want to remove OpenPets-managed Claude entries.
 
 ## Safe vs mutating validation
 
@@ -149,7 +149,7 @@ Safe validation:
 
 - Running workspace tests/checks/package commands.
 - Launching the packaged app.
-- Inspecting Agent Setup previews.
+- Inspecting Control Center Integrations previews.
 - Running `pnpm --filter @open-pets/client smoke:status` against the local packaged app.
 
 Mutating validation:

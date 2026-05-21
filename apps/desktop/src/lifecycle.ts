@@ -2,10 +2,10 @@ import { app } from "electron";
 
 import { closeAllAgentPets } from "./agent-pet-controller.js";
 import { destroyDefaultPet } from "./default-pet-controller.js";
+import { focusControlCenterWindow } from "./control-center-window.js";
 import { info } from "./logger.js";
 import { stopLocalIpcServer } from "./local-ipc.js";
 import { stopPluginService } from "./plugin-service.js";
-import { focusOpenTaskWindows } from "./windows.js";
 
 let intentionalQuit = false;
 let hardExitTimer: NodeJS.Timeout | null = null;
@@ -14,13 +14,13 @@ export function installAppLifecycle(): void {
   app.on("second-instance", () => {
     info("app", "second instance requested");
     console.log("Second OpenPets launch requested; keeping existing instance.");
-    focusOpenTaskWindows();
+    focusControlCenterWindow();
   });
 
   app.on("window-all-closed", () => {
     if (!intentionalQuit) {
-      info("app", "all task windows closed; tray app kept alive");
-      console.log("All OpenPets task windows closed; keeping tray app running.");
+      info("app", "all app windows closed; tray app kept alive");
+      console.log("All OpenPets app windows closed; keeping tray app running.");
     }
   });
 

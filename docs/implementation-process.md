@@ -121,18 +121,18 @@ Manual confirmation:
 
 Goal:
 
-Create the Electron desktop app shell with tray/menu behavior and task-specific placeholder windows.
+Create the Electron desktop app shell with tray/menu behavior and early app UI placeholders.
 
 Acceptance criteria:
 
 - App launches as a tray/menu bar app.
 - Tray menu matches the agreed initial menu.
-- Manage Pets, Configure Agents, and Settings open placeholder windows.
+- Manage Pets, Integrations, and Settings open from the tray.
 - Quit exits cleanly.
 
 Manual confirmation:
 
-- User can launch the app, inspect tray/menu items, open placeholder windows, and quit cleanly.
+- User can launch the app, inspect tray/menu items, open app UI entries, and quit cleanly.
 
 ### Phase 2: Default pet window foundation
 
@@ -247,7 +247,7 @@ Implement the dedicated Claude Code setup experience before full hook behavior.
 
 Acceptance criteria:
 
-- Agent Setup detects Claude Code on the user's machine where possible.
+- Control Center Integrations detects Claude Code on the user's machine where possible.
 - Shows detected/not detected/configured/needs setup/error states.
 - Shows exactly what configuration changes would be made.
 - Requires confirmation before editing config.
@@ -299,7 +299,7 @@ Acceptance criteria:
 - First-run onboarding opens appropriately.
 - Default pet appears early.
 - Optional pet install step works or gracefully skips on catalog failure.
-- Agent setup step uses the real Agent Setup flow.
+- Integrations step uses the real Control Center Integrations flow.
 - Done state clearly says OpenPets is ready.
 - Onboarding completion persists.
 

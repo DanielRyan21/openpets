@@ -20,17 +20,22 @@
     "package:dir": "pnpm build && node scripts/clean-package-output.cjs && electron-builder --dir && node dist/check-packaging-contract.js --output",
     "test": "node scripts/run-tests.mjs",
     "build:deps": "pnpm --filter @open-pets/desktop^... build",
+    "clean:dist": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
     "test:build": "pnpm build:deps && tsc -p tsconfig.tests.json",
     "check": "pnpm typecheck && pnpm build && pnpm test",
-    "typecheck": "pnpm build:deps && tsc --noEmit",
-    "build": "pnpm build:deps && tsc"
+    "typecheck": "pnpm build:deps && tsc --noEmit && tsc -p tsconfig.control-center.json --noEmit",
+    "build": "pnpm clean:dist && pnpm build:deps && tsc && vite build --config vite.control-center.config.ts"
   },
   "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@types/node": "^25.6.2",
     "@types/yauzl": "2.10.3",
+    "@vitejs/plugin-react": "^5.1.1",
     "electron": "^42.0.0",
     "electron-builder": "^26.10.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^7.2.6"
   },
   "dependencies": {
     "@open-pets/agent-events": "workspace:*",
@@ -39,6 +44,8 @@
     "@open-pets/cursor": "workspace:*",
     "@open-pets/mcp": "workspace:*",
     "@open-pets/opencode": "workspace:*",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "sharp": "^0.34.5",
     "yauzl": "3.3.0"
   }

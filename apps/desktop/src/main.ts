@@ -2,7 +2,10 @@ import { app } from "electron";
 import { delimiter, resolve } from "node:path";
 
 import { initializeAppState, isOnboardingCompleted, releaseStartupInstallLock } from "./app-state.js";
+import { installControlCenterIpcHandlers } from "./control-center-ipc.js";
+import { openControlCenterOnboardingWindow } from "./control-center-window.js";
 import { installDefaultPetDisplayHandlers, shouldOpenDefaultPetOnLaunch, showDefaultPet } from "./default-pet-controller.js";
+import { installInternalUiProtocol } from "./internal-ui-protocol.js";
 import { installAppLifecycle } from "./lifecycle.js";
 import { debug, error as logError, getLogFilePath, info, initializeLogger, warn } from "./logger.js";
 import { startLocalIpcServer } from "./local-ipc.js";
@@ -11,7 +14,6 @@ import { ElectronPluginJsHost } from "./plugin-js-host.js";
 import { initializePluginService } from "./plugin-service.js";
 import { createAppTray, refreshTrayMenu } from "./tray.js";
 import { checkForGitHubReleaseUpdate } from "./update-checker.js";
-import { installInternalUiHandlers, installInternalUiProtocol, openTaskWindow } from "./windows.js";
 
 // OpenPets does not store browser passwords, cookies, or encrypted app secrets.
 // Keep Chromium/Electron from prompting for macOS Keychain or Linux keyring access
@@ -46,7 +48,7 @@ if (!gotSingleInstanceLock) {
 
     initializeAppState();
     installInternalUiProtocol();
-    installInternalUiHandlers();
+    installControlCenterIpcHandlers();
     createAppTray();
     installDefaultPetDisplayHandlers();
     await startLocalIpcServer();
@@ -56,7 +58,7 @@ if (!gotSingleInstanceLock) {
     }
     if (!isOnboardingCompleted()) {
       try {
-        openTaskWindow("onboarding");
+        openControlCenterOnboardingWindow();
       } catch (error) {
         console.error("Failed to open OpenPets onboarding; continuing with tray app.", error);
       }

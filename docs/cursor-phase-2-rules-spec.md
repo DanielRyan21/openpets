@@ -1,5 +1,7 @@
 # Cursor Phase 2 Implementation Spec: Project Rules Guidance
 
+> Historical implementation spec. This file preserves the UI labels used during the original Cursor Phase 2 planning, including “Desktop Agent Setup.” The current desktop UI for integration setup is Control Center Integrations; see `docs/cursor-integration.md` and the desktop codemaps for current architecture.
+
 This spec covers the next Cursor integration phase after MCP-only setup. Phase 2 adds optional project-local Cursor rules so Cursor knows when and how to use the OpenPets MCP tools.
 
 ## Status

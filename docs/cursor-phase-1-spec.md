@@ -1,5 +1,7 @@
 # Cursor Phase 1 Implementation Spec: MCP-Only Setup
 
+> Historical implementation spec. This file preserves the UI labels used during the original Cursor Phase 1 rollout, including “Desktop Agent Setup” and “Cursor detail pane.” The current desktop UI for these flows is Control Center Integrations; see `docs/cursor-integration.md` and the desktop codemaps for current architecture.
+
 This spec turns `docs/cursor-integration.md` into an implementation-ready Phase 1 plan. Phase 1 is intentionally MCP-only. Cursor hooks, rules installation, permission edits, and extension/plugin work are explicitly out of scope except for discovery/validation notes.
 
 ## Status
